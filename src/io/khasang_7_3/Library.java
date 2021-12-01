@@ -1,14 +1,19 @@
 package io.khasang_7_3;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Library {
-    private Book book;
-    private ArrayList<Book> catalog = new ArrayList<>();
-    private int counter = 0;
+    private static int counter;
+    private List<Book> catalog = new ArrayList<>();
+    private int counterId;
 
+    public Library() {
+        counter++;
+        counterId = counter;
+    }
 
-    public ArrayList<Book> getCatalog() {
+    public List<Book> getCatalog() {
         return catalog;
     }
 
@@ -27,17 +32,18 @@ public class Library {
     }
 
     public String getBookInfoById(int id) {
-        book = catalog.get(id);
-        return book.getBookInfo();
+        for (int i = 0; i < catalog.size(); i++) {
+            return catalog.get(id).getBookInfo();
+        }
+        return null;
     }
 
     public int searchBookByName(String text) {
         String nameBook;
         for (int i = 0; i < getCountBook(); i++) {
-            book = catalog.get(i);
-            nameBook = book.getName().toLowerCase();
+            nameBook = catalog.get(i).getName().toLowerCase();
             if (nameBook.contains(text.toLowerCase())) {
-                System.out.println(book.getBookInfo());
+                System.out.println(catalog.get(i).getBookInfo());
                 counter++;
             }
         }
@@ -50,10 +56,9 @@ public class Library {
     public int searchBookByWriter(String text) {
         String nameWriter;
         for (int i = 0; i < getCountBook(); i++) {
-            book = catalog.get(i);
-            nameWriter = book.getAuthor().toLowerCase();
+            nameWriter = catalog.get(i).getAuthor().toLowerCase();
             if (nameWriter.contains(text.toLowerCase())) {
-                System.out.println(book.getBookInfo());
+                System.out.println(catalog.get(i).getBookInfo());
                 counter++;
             }
         }

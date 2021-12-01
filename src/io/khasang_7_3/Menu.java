@@ -6,25 +6,29 @@ public class Menu {
         Library library = new Library();
         Reader reader = new Reader();
 
-        int chooseAction;
+        int chooseAction = 0;
         System.out.println("Сейчас в каталоге книг - " + library.getCountBook());
         for (int i = 0; i < 10; i++) {
             System.out.println("Что будем делать: 0-Добавить книгу; 1-Найти книгу; 2-Удалить книгу");
             chooseAction = selectAction(reader);
-            if (chooseAction == 1) {
-                searchBook(reader, library);
-            }
-            if (chooseAction == 0) {
-                addLibraryBook(reader, library);
-                System.out.println("В каталоге книг - " + library.getCountBook());
-            }
-            if (chooseAction == 2) {
-                if (library.getCountBook() > 0) {
-                    removeLibraryBook(reader, library);
-                    System.out.println("В каталоге осталось книг - " + library.getCountBook());
-                } else {
-                    System.out.println("В каталоге пусто. Нет книг для удаления");
-                }
+            switch (chooseAction) {
+                case 0:
+                    addLibraryBook(reader, library);
+                    System.out.println("В каталоге книг - " + library.getCountBook());
+                    break;
+                case 1:
+                    searchBook(reader, library);
+                    break;
+                case 2:
+                    if (library.getCountBook() > 0) {
+                        removeLibraryBook(reader, library);
+                        System.out.println("В каталоге осталось книг - " + library.getCountBook());
+                    } else {
+                        System.out.println("В каталоге пусто. Нет книг для удаления");
+                    }
+                    break;
+                default:
+                    return;
             }
         }
     }
@@ -34,19 +38,20 @@ public class Menu {
         do {
             action = reader.getAnswer();
             if (action != 0 & action != 1 & action != 2) {
-                System.out.println("Укажите что нужно сделать: 0-Добавить книгу; 1-Найти книгу; 2-Удалить книгу");
+                System.out.println("Укажите что нужно сделать: 0-Добавить книгу; 1-Найти книгу по названию" + " 2-Удалить книгу");
             }
         } while (action != 0 & action != 1 & action != 2);
         return action;
     }
 
     static void searchBook(Reader reader, Library catalog) {
-        System.out.println("Что ищем?");
+        System.out.println("Введите название книги?");
         String str = reader.getString();
         int rez = catalog.searchBookByName(str);
         if (rez == 0) {
-            System.out.println("Книга \"" + str + "\" не найдена");
+
         }
+        System.out.println("Книга \"" + str + "\" не найдена");
     }
 
     static void addLibraryBook(Reader reader, Library library) {
@@ -71,7 +76,7 @@ public class Menu {
             numBook = reader.getAnswer();
         } while (numBook < 1 || numBook > catalog.getCountBook());
         --numBook;
-        System.out.println("Вы уверены что хотите удалить книну: " + catalog.getBookInfoById(numBook) + "?");
+        System.out.println("Вы уверены что хотите удалить книгу: " + catalog.getBookInfoById(numBook) + "?");
         System.out.println("0-нет; 1-да");
         int ans;
         do {

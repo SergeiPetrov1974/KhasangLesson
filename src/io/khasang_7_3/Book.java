@@ -27,6 +27,4 @@ public class Book {
     public String getBookInfo() {
         return ("\"" + name + "\" Автор: " + author + ", Год публикации: " + publicationYear);
     }
-
-
 }
